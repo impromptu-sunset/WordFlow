@@ -28,3 +28,6 @@ node_modules
 
 # Bower dependencies
 client/lib
+
+# DS Store
+.DS_Store
