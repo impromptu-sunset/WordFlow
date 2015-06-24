@@ -1,5 +1,5 @@
 
-app.controller('MultiplayerController', ['$scope', '$timeout', function($scope, $timeout) {
+app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'ColorIndexService', '$interval', function($scope, $timeout, Session, ColorIndexService, $interval) {
 
 
   var socket = io.connect('http://localhost:3000');
@@ -16,10 +16,22 @@ app.controller('MultiplayerController', ['$scope', '$timeout', function($scope, 
   $scope.testUsername;
   $scope.testColorIndex;
 
+  $scope.debugSendCurrentUser = function () {
+    console.log(Session.getUser());
+
+  };
+
+
   // uploads user data to server
   $scope.sendUserData = function() {
-    socket.emit('postUserUpdate', {username: $scope.testUsername, colorIndex: parseInt($scope.testColorIndex)});
+    var username = Session.getUser().username;
+    var colorIndex = ColorIndexService.get();
+
+    console.log('trying to send to sockets', username, colorIndex)
+    socket.emit('postUserUpdate', {username: username, colorIndex: colorIndex});
   };
+
+  $interval($scope.sendUserData, 1000)
 
   // initiates update function when a user has sent their data to the server
   socket.on('getUserUpdate', function(data) {
@@ -181,7 +193,7 @@ app.controller('MultiplayerController', ['$scope', '$timeout', function($scope, 
 
       // changes the user's circle color to their passed in color
       element
-        .transition().duration(200)
+        .transition().duration(1000)
           .ease('linear')
           .attr('fill', colors[user.colorIndex]);
 

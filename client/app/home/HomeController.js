@@ -1,5 +1,5 @@
 
-app.controller('HomeController', ['$scope', '$interval', 'Results', function($scope, $interval, Results) {
+app.controller('HomeController', ['$scope', '$interval', 'Results', 'ColorIndexService', function($scope, $interval, Results, ColorIndexService) {
 
   $scope.lastTime = 1;
 
@@ -27,6 +27,9 @@ app.controller('HomeController', ['$scope', '$interval', 'Results', function($sc
   $scope.potentialScoreSoFar = 0;
 
   $scope.colorIndex;
+
+  // start the app with a perfect colorIndex
+  ColorIndexService.set(10);
 
   var start;
 
@@ -114,6 +117,8 @@ app.controller('HomeController', ['$scope', '$interval', 'Results', function($sc
       latestScores.shift();
     }
     $scope.colorIndex = $scope.getRoundedIndex(latestScores, seconds, maxScore);
+    
+    ColorIndexService.set($scope.colorIndex);
 
   };
 
