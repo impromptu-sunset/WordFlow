@@ -1,19 +1,31 @@
-<div id='signup' ng-Controller="SignUpController">
-  <h3> Hello I am the signup page!</h3>
-  <form name="signupForm" ng-submit='signupForm.$submitted=true; signup()' novalidate>
-    <input type='text' ng-model='user.username' name='uName' required="" />
-    <div ng-show="signupForm.$submitted || signupForm.uName.$touched">
-      <div ng-show="signupForm.uName.$error.required">Enter a username</div>
-    </div>
-
-    <br />
-    <input type="password" ng-model='user.password' name='uPassword' required="">
-    <div ng-show="signupForm.$submitted || signupForm.uPassword.$touched">
-      <div ng-show="signupForm.uPassword.$error.required">Enter a password</div>
-    </div>
-
-    <br />
-    <button>signup</button>
-  </form>
-  <a ui-sref="login">Already have an account? <strong>Signin</strong> ...</a>
+<div id="signup-container" class="container" ng-controller="SignUpController">
+  <div class="col-sm-6 col-sm-offset-4">
+    <form name="signupForm" ng-submit="processSignup()" class="form-signin">
+      <h2 class="form-signup-heading">Signup</h2>
+      <label for="usernameInput" class="sr-only">Username</label>
+        <input type="text" ng-model="user.username" name="usernameInput" placeholder="Username"required autofocus/>       
+      <label for="passwordInput" class="sr-only">Password</label>
+        <input type="password" ng-model="user.password" name="passwordInput" placeholder="Password" required/>
+      <button>Signup</button>
+    </form>
+  <div class="signup-link-box">
+    <a ui-sref="login">Already have an account? <strong>Login</strong> ...</a>
+  </div>
+  
+  <!-- ERROR HANDLING AND ERROR MESSAGES -->
+  <div class="error-box">
+    <h3 class="error"> {{ message }} </h3>
+    <ng-messages for="signupForm.usernameInput.$error" ng-if="signupForm.usernameInput.$dirty">
+      <ng-message when="required" class="error">
+        Enter a username
+      </ng-message>
+    </ng-messages>
+    <ng-messages for="signupForm.passwordInput.$error" ng-if="signupForm.passwordInput.$dirty">
+      <ng-message when="required" class="error">
+        Enter a password
+      </ng-message>
+    </ng-messages>
+  </div>
+  </div>
 </div>
+

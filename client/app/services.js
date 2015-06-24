@@ -132,32 +132,38 @@ angular.module('app.services', [])
     };
 
     var login = function(user) {
-      $http({
+      return $http({
         method: 'POST',
         url: '/api/users/login',
         data: user
       })
-      .then(function(response) {
+      .success(function(data, status) {
         Session.create(
-          response.data.id,
-          response.data.username
+          data.id,
+          data.username
         );
+      })
+      .error(function(data, status) {
+        console.error(data);
       });
     };
 
     var signUp = function(user) {
-      $http({
+      return $http({
         method: 'POST',
         url: 'api/users/signup',
         data: user
       })
-      .then(function(response) {
+      .success(function(data, status) {
         Session.create(
-          response.data.id,
-          response.data.username
+          data.id,
+          data.username
         );
+      }).error(function(data, status) {
+        console.log('data', data, 'staus', status);
       });
     };
+
 
     return {
       login: login,

@@ -1,22 +1,32 @@
-<div id='login' ng-controller="LoginController">
-  <h3> Hello I am the login page</h3>
-  <form name="loginForm" ng-submit='loginForm.$submitted=true; login()' novalidate>
-    <h5>Username:</h5>
-    <input type='text' ng-model='user.username' name="uName" required="" />
-    <div ng-show="loginForm.$submitted || loginForm.uName.$touched">
-      <div ng-show="loginForm.uName.$error.required">Enter your username</div>
-    </div>
+<div id="login-container" class="container" ng-controller="LoginController">
+  <div class="col-sm-6 col-sm-offset-4">
+    <form name="loginForm" ng-submit="processLogin()" class="form-signin">
+      <h2 class="form-login-heading">Please sign in</h2>
+      <label for="usernameInput" class="sr-only">Username</label>
+        <input type="text" ng-model="user.username" name="usernameInput" placeholder="Username"required autofocus/>       
+      <label for="passwordInput" class="sr-only">Password</label>
+        <input type="text" ng-model="user.password" name="passwordInput" placeholder="Password" required/>
+      <button>Login</button>
+    </form>
+  <div class="signup-link-box">
+    <a ui-sref="signup">Don't have an account? <strong>Signup</strong> ...</a>
+  </div>
+  
+  <!-- ERROR HANDLING AND ERROR MESSAGES -->
+  <div class="error-box">
+    <h3 class="error"> {{ message }} </h3>
+    <ng-messages for="loginForm.usernameInput.$error" ng-if="loginForm.usernameInput.$dirty">
+      <ng-message when="required" class="error">
+        Enter a username
+      </ng-message>
+    </ng-messages>
+    <ng-messages for="loginForm.passwordInput.$error" ng-if="loginForm.passwordInput.$dirty">
+      <ng-message when="required" class="error">
+        Enter a password
+      </ng-message>
+    </ng-messages>
+  </div>
 
-    <br />
-    <h5>Password:</h5>
-    <input type="password" ng-model='user.password' name="uPassword" required="" />
-    <div ng-show="loginForm.$submitted || loginForm.uPassword.$touched">
-      <div ng-show="loginForm.uPassword.$error.required">Enter your password</div>
-    </div>
-    
-    <br />
-    <button>Log In</button>
-  </form>
-  <span>{{ error }}</span>
-  <a ui-sref="signup">Don't have an account? <strong>Signup</strong> ...</a>
+  </div>
 </div>
+

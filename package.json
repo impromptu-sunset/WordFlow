@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bahiafayez/impromptu-sunset#readme",
   "dependencies": {
+    "angular-messages": "^1.4.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.1",
     "bower": "^1.4.1",
