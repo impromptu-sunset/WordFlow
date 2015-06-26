@@ -47,8 +47,6 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
       $scope.myUser = currentUser;
       // set a default color index of 10
       $scope.myUser.colorIndex = 10;
-      // send the new user to get their dom element created
-      // $scope.handleUserUpdate($scope.myUser);
     } // if the username has not changed
     else {
       // update the myUser value
