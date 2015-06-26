@@ -30,7 +30,6 @@ app.controller('ResultsController', ['$scope', '$timeout', 'Results', function($
     // to be stored in the database.
     $scope.sendResultsToServer = function() {
       var resultsObj = {};
-
       resultsObj.session_time = Results.getDuration();
       resultsObj.char_count = Results.getCharacterCount();
       resultsObj.text = Results.getText();
@@ -46,6 +45,7 @@ app.controller('ResultsController', ['$scope', '$timeout', 'Results', function($
         // in testing there is no data object
         // if there is a data object, we are not running a test
         // therefore we need to set the scope message
+        console.log(data);
         if (data.data) {
           $scope.message = data.data.message;
         }

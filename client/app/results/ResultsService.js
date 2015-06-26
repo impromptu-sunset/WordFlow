@@ -7,23 +7,36 @@ angular.module('app.services')
     var funcs = {};
 
     funcs.getTotalScore = function() {
-      console.log('hi');
       return _.reduce(scores, function(memo, score) {
         return memo + score;
       }, 0);
     };
     funcs.getScoresPerMinute = function() {
       var result = [];
-      for (var i = 0; i < scores.length; i++) {
-        if (!(i % 60)) result.push(0);
-        result[Math.floor(i / 60)] += scores[i];
+      // if there are no scores (if the user goes directly to the results page)
+      if (!scores) {
+        return null;
+      } else {
+        for (var i = 0; i < scores.length; i++) {
+          if (!(i % 60)) result.push(0);
+          result[Math.floor(i / 60)] += scores[i];
+        }
+        return result;
       }
-      return result;
+      
     };
     funcs.getWordCount = function() {
+      // if there are no text (if the user goes directly to the results page)
+      if (!text) {
+        return null;
+      }
       return text.split(' ').length;
     };
     funcs.getCharacterCount = function() {
+      // if there are no text (if the user goes directly to the results page)
+      if (!text) {
+        return null;
+      }
       return text.length;
     };
     funcs.setDuration = function(minutes){
@@ -36,7 +49,6 @@ angular.module('app.services')
       scores = array;
     };
     funcs.getDuration = function() {
-      console.log("here");
       return duration;
     };
     funcs.getText = function() {

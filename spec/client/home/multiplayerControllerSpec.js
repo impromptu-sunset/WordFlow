@@ -88,23 +88,6 @@ describe('Multiplayer Controller', function() {
       expect($scope.myUser).toEqual(newUserData);
     });
 
-    it('should call handleUserUpdate when the username has changed', function() {
-      createController();
-      var newUserData = {username: 'airbud', colorIndex: 5};
-      $scope.myUser = {username: 'mowgli', colorIndex: 4};
-      spyOn($scope, 'handleUserUpdate');
-      $scope.updateMyUserAndColor();
-      expect($scope.handleUserUpdate).toHaveBeenCalled();
-    });
-
-    it('should call handleUserUpdate when the username has not changed', function() {
-      createController();
-      var newUserData = {username: 'captainPlanet', colorIndex: 10};
-      $scope.myUser = {username: 'captainPlanet', colorIndex: 10};
-      spyOn($scope, 'handleUserUpdate');
-      $scope.updateMyUserAndColor();
-      expect($scope.handleUserUpdate).toHaveBeenCalled();
-    });
 
   });
 
