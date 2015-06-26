@@ -38,6 +38,7 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
   // updates the new myUser data
   $scope.updateMyUserAndColor = function() {
     var currentUser = $scope.getMyUserAndColor();
+    console.log('new color index is', currentUser.colorIndex);
     // if the name has changed (by login or logout)
     if (currentUser.username !== $scope.myUser.username) {
       // delete the old and new usernames from the users collection
@@ -93,7 +94,7 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
   });
 
   // on page load, goes and gets all of the users currently logged in
-  $scope.socket.emit('getAllUsers');
+  // $scope.socket.emit('getAllUsers');
 
 
   // deletes passed in user from the users collection
