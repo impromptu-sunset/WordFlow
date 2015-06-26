@@ -62,6 +62,7 @@ app.controller('HomeController', ['$scope', '$interval', 'Results', 'ColorIndexS
           var currentScore = Score.getScore(Time.getTime(), Time.getLastKeyPress());
           $scope.score = currentScore;
           $scope.timer = Time.getTimer();
+          console.log(currentScore, Score.getMaxScore());
           var colorIndex = ColorIndexService.getRoundedIndex(currentScore, Score.getMaxScore());
           $scope.colorIndex = colorIndex;
           ColorIndexService.set(colorIndex);
