@@ -10,7 +10,7 @@
                 <!-- TIMER, appears after submitting and replacing the input field -->
                 <h1 class="countdown-box set-timer-components timer-text" ng-show="!(unsubmitted)"> {{ timer }} </h1>
                 <!-- INPUT FIELD, disappears after submitting -->
-                <input ng-show="unsubmitted" class="set-timer-components" classtype="text" ng-model="timerInput" ng-enter="startTimer()" autofocus maxlength="3">
+                <input ng-show="unsubmitted" class="set-timer-components" classtype="text" ng-model="timerInput" ng-enter="startTimer()" autofocus maxlength="3" onlyDigits>
                 <!-- this text is hidden after submitting to maintain timer placement -->
                 <h2 class="set-timer-components" ng-class="!(unsubmitted) ? 'invisible' : 'visible'">  minutes</h2>
               </div>

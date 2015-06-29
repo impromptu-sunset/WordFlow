@@ -62,7 +62,9 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
   $interval(function () {
     $scope.updateMyUserAndColor();
     $scope.sendUserData($scope.myUser);
-    // $scope.handleUserUpdate($scope.myUser);
+    if ($scope.myUser.username === 'you') {
+      $scope.handleUserUpdate($scope.myUser);
+    }
   }, 1000);
 
   ////////////////
