@@ -1,5 +1,5 @@
 
-app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'ColorIndexService', '$interval', function($scope, $timeout, Session, ColorIndexService, $interval) {
+app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'ColorIndexService', '$interval', 'Time', 'Results', function($scope, $timeout, Session, ColorIndexService, $interval, Time, Results) {
 
   $scope.socket = io();
 
@@ -21,18 +21,23 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
   $scope.getMyUserAndColor = function () {
     var username = Session.getUser().username;
     var colorIndex = ColorIndexService.get();
+    var WPM;
     // if no username is provided (they haven't logged in)
     if (username === '' ||
         username === undefined) {
       // set a default username of 'you'
       username = 'you';
     }
-
     if (colorIndex === undefined) {
       colorIndex = 10;
     }
-
-    return {username: username, colorIndex: colorIndex};
+    
+    if (Time.getStartTime() !== undefined) {
+      WPM = 0;
+    } else {
+      WPM = $scope.getUserWPM();
+    }
+    return {username: username, colorIndex: colorIndex, WPM: WPM};
   }
 
   // updates the new myUser data
@@ -47,6 +52,8 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
       $scope.myUser = currentUser;
       // set a default color index of 10
       $scope.myUser.colorIndex = 10;
+      // set default WPM
+      $scope.myUser.WPM = 0;
       // send the new user to get their dom element created
       $scope.handleUserUpdate($scope.myUser);
     } // if the username has not changed
@@ -56,11 +63,25 @@ app.controller('MultiplayerController', ['$scope', '$timeout', 'Session', 'Color
     }
   }
 
+  $scope.getUserWPM = function() {
+      if (Time.getStartTime() !== undefined) {
+        var timeElapsed = (Time.getTime() - Time.getStartTime()) / 60000;
+        var words = Results.getWordCount();
+        return Math.floor((words / timeElapsed) * 100) / 100;
+      } else {
+        return 0;
+      }  
+  }
+
+  $scope.updateUserWPM = function() {
+    $scope.myUser.WPM = $scope.getUserWPM();
+  }
 
   // every second, set the current user username and color
   // and send that data to the socket server
   $interval(function () {
     $scope.updateMyUserAndColor();
+    $scope.updateUserWPM();
     $scope.sendUserData($scope.myUser);
     if ($scope.myUser.username === 'you') {
       $scope.handleUserUpdate($scope.myUser);

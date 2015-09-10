@@ -2,6 +2,16 @@
 app.controller('HomeController', ['$scope', '$interval', 'Results', 'ColorIndexService', 'Time', 'Score', function($scope, $interval, Results, ColorIndexService, Time, Score) {
 
 
+/*
+Get start time from the time service
+Get the number of words from the text box (on the scope)
+Split string, get array.length
+words/time
+display that in box on homepage
+*/
+
+
+
   $scope.unsubmitted = true;
   $scope.gameOver = false;
 
@@ -51,6 +61,7 @@ app.controller('HomeController', ['$scope', '$interval', 'Results', 'ColorIndexS
           $scope.timer = Time.getTimer();
           var colorIndex = ColorIndexService.getRoundedIndex(currentScore, Score.getMaxScore());
           ColorIndexService.set(colorIndex);
+          Results.setText($scope.textInput);
         }
       }, 1000, 0);
 

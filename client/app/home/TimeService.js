@@ -47,6 +47,10 @@ angular.module('app.services')
       return elapsed >= totalMinutes * 60000;
     };
 
+    services.getStartTime = function() {
+      return startTime;
+    };
+
     return services;
 
   });
